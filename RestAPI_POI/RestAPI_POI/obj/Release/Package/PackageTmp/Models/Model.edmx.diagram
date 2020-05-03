@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1166e1cdb1434653a941fbc813b8678c" Name="Diagram1">
+        <EntityTypeShape EntityType="MYNEGOCIOModel.clientes" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYNEGOCIOModel.estados" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYNEGOCIOModel.facturas" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYNEGOCIOModel.formas_pago" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYNEGOCIOModel.ordenes" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYNEGOCIOModel.pedidos" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYNEGOCIOModel.productos" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYNEGOCIOModel.tipos_documento" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <AssociationConnector Association="MYNEGOCIOModel.fk_ordenes_clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="MYNEGOCIOModel.fk_tipos_documento_clientes1" ManuallyRouted="false" />
+        <AssociationConnector Association="MYNEGOCIOModel.fk_estados_ordenes1" ManuallyRouted="false" />
+        <AssociationConnector Association="MYNEGOCIOModel.fk_facturas_ordenes1" ManuallyRouted="false" />
+        <AssociationConnector Association="MYNEGOCIOModel.fk_formas_pago_facturas1" ManuallyRouted="false" />
+        <AssociationConnector Association="MYNEGOCIOModel.fk_pedidos_ordenes1" ManuallyRouted="false" />
+        <AssociationConnector Association="MYNEGOCIOModel.fk_productos_pedidos1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

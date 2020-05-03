@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MYNEGOCIOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="clientes">
+    <Key>
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="apellido1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="documento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_TipoDocumento" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ordenes" Relationship="Self.fk_ordenes_clientes" FromRole="clientes" ToRole="ordenes" />
+    <NavigationProperty Name="tipos_documento" Relationship="Self.fk_tipos_documento_clientes1" FromRole="clientes" ToRole="tipos_documento" />
+  </EntityType>
+  <EntityType Name="estados">
+    <Key>
+      <PropertyRef Name="idestado" />
+    </Key>
+    <Property Name="idestado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ordenes_id_Orden" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ordenes" Relationship="Self.fk_estados_ordenes1" FromRole="estados" ToRole="ordenes" />
+  </EntityType>
+  <EntityType Name="facturas">
+    <Key>
+      <PropertyRef Name="id_Facturas" />
+    </Key>
+    <Property Name="id_Facturas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_Orden" Type="Int32" Nullable="false" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="numProductos" Type="Int32" Nullable="false" />
+    <Property Name="valorPedido" Type="Double" Nullable="false" />
+    <Property Name="id_FormaPago" Type="Int32" Nullable="false" />
+    <Property Name="ordenes_id_Orden" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ordenes" Relationship="Self.fk_facturas_ordenes1" FromRole="facturas" ToRole="ordenes" />
+    <NavigationProperty Name="formas_pago" Relationship="Self.fk_formas_pago_facturas1" FromRole="facturas" ToRole="formas_pago" />
+  </EntityType>
+  <EntityType Name="formas_pago">
+    <Key>
+      <PropertyRef Name="id_Forma_pago" />
+    </Key>
+    <Property Name="id_Forma_pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_FormasPago" Type="Int32" Nullable="false" />
+    <Property Name="facturas_id_Facturas" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="facturas" Relationship="Self.fk_formas_pago_facturas1" FromRole="formas_pago" ToRole="facturas" />
+  </EntityType>
+  <EntityType Name="ordenes">
+    <Key>
+      <PropertyRef Name="id_Orden" />
+    </Key>
+    <Property Name="id_Orden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="id_Cliente" Type="Int32" Nullable="false" />
+    <Property Name="clientes_id_cliente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="clientes" Relationship="Self.fk_ordenes_clientes" FromRole="ordenes" ToRole="clientes" />
+    <NavigationProperty Name="estados" Relationship="Self.fk_estados_ordenes1" FromRole="ordenes" ToRole="estados" />
+    <NavigationProperty Name="facturas" Relationship="Self.fk_facturas_ordenes1" FromRole="ordenes" ToRole="facturas" />
+    <NavigationProperty Name="pedidos" Relationship="Self.fk_pedidos_ordenes1" FromRole="ordenes" ToRole="pedidos" />
+  </EntityType>
+  <EntityType Name="pedidos">
+    <Key>
+      <PropertyRef Name="id_Pedido" />
+    </Key>
+    <Property Name="id_Pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_Producto" Type="Int32" Nullable="false" />
+    <Property Name="id_Orden" Type="Int32" Nullable="false" />
+    <Property Name="cantidad" Type="Int32" Nullable="false" />
+    <Property Name="precioTotal" Type="Double" Nullable="false" />
+    <Property Name="ordenes_id_Orden" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ordenes" Relationship="Self.fk_pedidos_ordenes1" FromRole="pedidos" ToRole="ordenes" />
+    <NavigationProperty Name="productos" Relationship="Self.fk_productos_pedidos1" FromRole="pedidos" ToRole="productos" />
+  </EntityType>
+  <EntityType Name="productos">
+    <Key>
+      <PropertyRef Name="id_Producto" />
+    </Key>
+    <Property Name="id_Producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="stock" Type="Int32" Nullable="false" />
+    <Property Name="precio" Type="Double" Nullable="false" />
+    <Property Name="pedidos_id_Pedido" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="pedidos" Relationship="Self.fk_productos_pedidos1" FromRole="productos" ToRole="pedidos" />
+  </EntityType>
+  <EntityType Name="tipos_documento">
+    <Key>
+      <PropertyRef Name="id_TipoDocumento" />
+    </Key>
+    <Property Name="id_TipoDocumento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="clientes_id_cliente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="clientes" Relationship="Self.fk_tipos_documento_clientes1" FromRole="tipos_documento" ToRole="clientes" />
+  </EntityType>
+  <Association Name="fk_ordenes_clientes">
+    <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clientes">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="ordenes">
+        <PropertyRef Name="clientes_id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_tipos_documento_clientes1">
+    <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
+    <End Role="tipos_documento" Type="Self.tipos_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clientes">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="tipos_documento">
+        <PropertyRef Name="clientes_id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_estados_ordenes1">
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="1" />
+    <End Role="estados" Type="Self.estados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ordenes">
+        <PropertyRef Name="id_Orden" />
+      </Principal>
+      <Dependent Role="estados">
+        <PropertyRef Name="ordenes_id_Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_facturas_ordenes1">
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="1" />
+    <End Role="facturas" Type="Self.facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ordenes">
+        <PropertyRef Name="id_Orden" />
+      </Principal>
+      <Dependent Role="facturas">
+        <PropertyRef Name="ordenes_id_Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_formas_pago_facturas1">
+    <End Role="facturas" Type="Self.facturas" Multiplicity="1" />
+    <End Role="formas_pago" Type="Self.formas_pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="facturas">
+        <PropertyRef Name="id_Facturas" />
+      </Principal>
+      <Dependent Role="formas_pago">
+        <PropertyRef Name="facturas_id_Facturas" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedidos_ordenes1">
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="1" />
+    <End Role="pedidos" Type="Self.pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ordenes">
+        <PropertyRef Name="id_Orden" />
+      </Principal>
+      <Dependent Role="pedidos">
+        <PropertyRef Name="ordenes_id_Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_productos_pedidos1">
+    <End Role="pedidos" Type="Self.pedidos" Multiplicity="1" />
+    <End Role="productos" Type="Self.productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pedidos">
+        <PropertyRef Name="id_Pedido" />
+      </Principal>
+      <Dependent Role="productos">
+        <PropertyRef Name="pedidos_id_Pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MYNEGOCIOEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="clientes" EntityType="Self.clientes" />
+    <EntitySet Name="estados" EntityType="Self.estados" />
+    <EntitySet Name="facturas" EntityType="Self.facturas" />
+    <EntitySet Name="formas_pago" EntityType="Self.formas_pago" />
+    <EntitySet Name="ordenes" EntityType="Self.ordenes" />
+    <EntitySet Name="pedidos" EntityType="Self.pedidos" />
+    <EntitySet Name="productos" EntityType="Self.productos" />
+    <EntitySet Name="tipos_documento" EntityType="Self.tipos_documento" />
+    <AssociationSet Name="fk_ordenes_clientes" Association="Self.fk_ordenes_clientes">
+      <End Role="clientes" EntitySet="clientes" />
+      <End Role="ordenes" EntitySet="ordenes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_tipos_documento_clientes1" Association="Self.fk_tipos_documento_clientes1">
+      <End Role="clientes" EntitySet="clientes" />
+      <End Role="tipos_documento" EntitySet="tipos_documento" />
+    </AssociationSet>
+    <AssociationSet Name="fk_estados_ordenes1" Association="Self.fk_estados_ordenes1">
+      <End Role="ordenes" EntitySet="ordenes" />
+      <End Role="estados" EntitySet="estados" />
+    </AssociationSet>
+    <AssociationSet Name="fk_facturas_ordenes1" Association="Self.fk_facturas_ordenes1">
+      <End Role="ordenes" EntitySet="ordenes" />
+      <End Role="facturas" EntitySet="facturas" />
+    </AssociationSet>
+    <AssociationSet Name="fk_formas_pago_facturas1" Association="Self.fk_formas_pago_facturas1">
+      <End Role="facturas" EntitySet="facturas" />
+      <End Role="formas_pago" EntitySet="formas_pago" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedidos_ordenes1" Association="Self.fk_pedidos_ordenes1">
+      <End Role="ordenes" EntitySet="ordenes" />
+      <End Role="pedidos" EntitySet="pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="fk_productos_pedidos1" Association="Self.fk_productos_pedidos1">
+      <End Role="pedidos" EntitySet="pedidos" />
+      <End Role="productos" EntitySet="productos" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

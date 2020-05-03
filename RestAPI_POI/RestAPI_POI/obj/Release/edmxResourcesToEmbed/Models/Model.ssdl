@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MYNEGOCIOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="clientes">
+    <Key>
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre1" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="nombre2" Type="varchar" MaxLength="20" />
+    <Property Name="apellido1" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="apellido2" Type="varchar" MaxLength="20" />
+    <Property Name="documento" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="id_TipoDocumento" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="estados">
+    <Key>
+      <PropertyRef Name="idestado" />
+    </Key>
+    <Property Name="idestado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="ordenes_id_Orden" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="facturas">
+    <Key>
+      <PropertyRef Name="id_Facturas" />
+    </Key>
+    <Property Name="id_Facturas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_Orden" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="numProductos" Type="int" Nullable="false" />
+    <Property Name="valorPedido" Type="float" Nullable="false" />
+    <Property Name="id_FormaPago" Type="int" Nullable="false" />
+    <Property Name="ordenes_id_Orden" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="formas_pago">
+    <Key>
+      <PropertyRef Name="id_Forma_pago" />
+    </Key>
+    <Property Name="id_Forma_pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="id_FormasPago" Type="int" Nullable="false" />
+    <Property Name="facturas_id_Facturas" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ordenes">
+    <Key>
+      <PropertyRef Name="id_Orden" />
+    </Key>
+    <Property Name="id_Orden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="id_Cliente" Type="int" Nullable="false" />
+    <Property Name="clientes_id_cliente" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="pedidos">
+    <Key>
+      <PropertyRef Name="id_Pedido" />
+    </Key>
+    <Property Name="id_Pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_Producto" Type="int" Nullable="false" />
+    <Property Name="id_Orden" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="precioTotal" Type="float" Nullable="false" />
+    <Property Name="ordenes_id_Orden" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="productos">
+    <Key>
+      <PropertyRef Name="id_Producto" />
+    </Key>
+    <Property Name="id_Producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="stock" Type="int" Nullable="false" />
+    <Property Name="precio" Type="float" Nullable="false" />
+    <Property Name="pedidos_id_Pedido" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tipos_documento">
+    <Key>
+      <PropertyRef Name="id_TipoDocumento" />
+    </Key>
+    <Property Name="id_TipoDocumento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="clientes_id_cliente" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_estados_ordenes1">
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="1" />
+    <End Role="estados" Type="Self.estados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ordenes">
+        <PropertyRef Name="id_Orden" />
+      </Principal>
+      <Dependent Role="estados">
+        <PropertyRef Name="ordenes_id_Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_facturas_ordenes1">
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="1" />
+    <End Role="facturas" Type="Self.facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ordenes">
+        <PropertyRef Name="id_Orden" />
+      </Principal>
+      <Dependent Role="facturas">
+        <PropertyRef Name="ordenes_id_Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_formas_pago_facturas1">
+    <End Role="facturas" Type="Self.facturas" Multiplicity="1" />
+    <End Role="formas_pago" Type="Self.formas_pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="facturas">
+        <PropertyRef Name="id_Facturas" />
+      </Principal>
+      <Dependent Role="formas_pago">
+        <PropertyRef Name="facturas_id_Facturas" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ordenes_clientes">
+    <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clientes">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="ordenes">
+        <PropertyRef Name="clientes_id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedidos_ordenes1">
+    <End Role="ordenes" Type="Self.ordenes" Multiplicity="1" />
+    <End Role="pedidos" Type="Self.pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ordenes">
+        <PropertyRef Name="id_Orden" />
+      </Principal>
+      <Dependent Role="pedidos">
+        <PropertyRef Name="ordenes_id_Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_productos_pedidos1">
+    <End Role="pedidos" Type="Self.pedidos" Multiplicity="1" />
+    <End Role="productos" Type="Self.productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pedidos">
+        <PropertyRef Name="id_Pedido" />
+      </Principal>
+      <Dependent Role="productos">
+        <PropertyRef Name="pedidos_id_Pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_tipos_documento_clientes1">
+    <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
+    <End Role="tipos_documento" Type="Self.tipos_documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clientes">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="tipos_documento">
+        <PropertyRef Name="clientes_id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MYNEGOCIOModelStoreContainer">
+    <EntitySet Name="clientes" EntityType="Self.clientes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="estados" EntityType="Self.estados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="facturas" EntityType="Self.facturas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="formas_pago" EntityType="Self.formas_pago" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ordenes" EntityType="Self.ordenes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pedidos" EntityType="Self.pedidos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="productos" EntityType="Self.productos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipos_documento" EntityType="Self.tipos_documento" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_estados_ordenes1" Association="Self.fk_estados_ordenes1">
+      <End Role="ordenes" EntitySet="ordenes" />
+      <End Role="estados" EntitySet="estados" />
+    </AssociationSet>
+    <AssociationSet Name="fk_facturas_ordenes1" Association="Self.fk_facturas_ordenes1">
+      <End Role="ordenes" EntitySet="ordenes" />
+      <End Role="facturas" EntitySet="facturas" />
+    </AssociationSet>
+    <AssociationSet Name="fk_formas_pago_facturas1" Association="Self.fk_formas_pago_facturas1">
+      <End Role="facturas" EntitySet="facturas" />
+      <End Role="formas_pago" EntitySet="formas_pago" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ordenes_clientes" Association="Self.fk_ordenes_clientes">
+      <End Role="clientes" EntitySet="clientes" />
+      <End Role="ordenes" EntitySet="ordenes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedidos_ordenes1" Association="Self.fk_pedidos_ordenes1">
+      <End Role="ordenes" EntitySet="ordenes" />
+      <End Role="pedidos" EntitySet="pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="fk_productos_pedidos1" Association="Self.fk_productos_pedidos1">
+      <End Role="pedidos" EntitySet="pedidos" />
+      <End Role="productos" EntitySet="productos" />
+    </AssociationSet>
+    <AssociationSet Name="fk_tipos_documento_clientes1" Association="Self.fk_tipos_documento_clientes1">
+      <End Role="clientes" EntitySet="clientes" />
+      <End Role="tipos_documento" EntitySet="tipos_documento" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

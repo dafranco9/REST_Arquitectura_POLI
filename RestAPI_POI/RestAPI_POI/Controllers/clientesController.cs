@@ -17,7 +17,9 @@ namespace RestAPI_POI.Controllers
         private MYNEGOCIOEntities db = new MYNEGOCIOEntities();
 
         // GET: api/clientes
-        public IQueryable<clientes> Getclientes()
+        [HttpGet]
+        [ActionName("GetclientesAll")]
+        public IQueryable<clientes> GetclientesAll()
         {
             return db.clientes;
         }
@@ -71,13 +73,15 @@ namespace RestAPI_POI.Controllers
         }
 
         // POST: api/clientes
+        [HttpPost]
+        [ActionName("Postclientes")]
         [ResponseType(typeof(clientes))]
         public IHttpActionResult Postclientes(clientes clientes)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             db.clientes.Add(clientes);
             db.SaveChanges();

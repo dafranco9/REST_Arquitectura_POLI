@@ -13,6 +13,26 @@ namespace RestAPI_POI.Controllers
             return View();
         }
 
+        public ActionResult Cliente()
+        {
+            return View();
+        }
+
+        public ActionResult Producto()
+        {
+            return View();
+        }
+
+        public ActionResult Usuario()
+        {
+            return View();
+        }
+
+        public ActionResult Ventas()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
